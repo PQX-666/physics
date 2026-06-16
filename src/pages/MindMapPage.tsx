@@ -17,17 +17,19 @@ function buildChapterMap(): ChapterNode[] {
     .filter((n) => n.formulas.length > 0)
 }
 
+const BASE = import.meta.env.BASE_URL
+
 const MIND_MAPS = [
-  { src: '/mindmaps/new/理解标准波的方程.png', title: '理解标准波的方程' },
-  { src: '/mindmaps/new/双缝干涉核心.png', title: '双缝干涉核心' },
-  { src: '/mindmaps/new/单缝衍射核心.png', title: '单缝衍射核心' },
-  { src: '/mindmaps/new/夫琅禾费单缝衍射.png', title: '夫琅禾费单缝衍射' },
-  { src: '/mindmaps/new/光栅核心.png', title: '光栅核心' },
-  { src: '/mindmaps/new/物理光栅题目保姆讲解.png', title: '光栅题目讲解' },
-  { src: '/mindmaps/new/劈尖干涉.png', title: '劈尖干涉' },
-  { src: '/mindmaps/new/劈尖牛顿环核心.png', title: '劈尖与牛顿环核心' },
-  { src: '/mindmaps/new/偏振片与马吕斯定律.png', title: '偏振片与马吕斯定律' },
-  { src: '/mindmaps/new/偏振本质.png', title: '偏振本质' },
+  { src: `${BASE}mindmaps/new/理解标准波的方程.png`, title: '理解标准波的方程' },
+  { src: `${BASE}mindmaps/new/双缝干涉核心.png`, title: '双缝干涉核心' },
+  { src: `${BASE}mindmaps/new/单缝衍射核心.png`, title: '单缝衍射核心' },
+  { src: `${BASE}mindmaps/new/夫琅禾费单缝衍射.png`, title: '夫琅禾费单缝衍射' },
+  { src: `${BASE}mindmaps/new/光栅核心.png`, title: '光栅核心' },
+  { src: `${BASE}mindmaps/new/物理光栅题目保姆讲解.png`, title: '光栅题目讲解' },
+  { src: `${BASE}mindmaps/new/劈尖干涉.png`, title: '劈尖干涉' },
+  { src: `${BASE}mindmaps/new/劈尖牛顿环核心.png`, title: '劈尖与牛顿环核心' },
+  { src: `${BASE}mindmaps/new/偏振片与马吕斯定律.png`, title: '偏振片与马吕斯定律' },
+  { src: `${BASE}mindmaps/new/偏振本质.png`, title: '偏振本质' },
 ]
 
 const CHAPTER_COLORS = [
