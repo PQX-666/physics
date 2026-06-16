@@ -11,7 +11,7 @@ export default function CalculationStepCard({ pattern, onDone }: CalculationStep
   const totalSteps = pattern.steps.length
 
   return (
-    <div className="bg-white rounded-2xl shadow-[var(--shadow-sm)] p-6 md:p-8 max-w-lg mx-auto">
+    <div className="bg-[var(--card)] rounded-2xl shadow-[var(--shadow-sm)] p-6 md:p-8 max-w-lg mx-auto">
       <div className="flex items-center justify-between mb-3">
         <h3 className="text-lg font-semibold text-[var(--text)]">{pattern.title}</h3>
         <span className="text-xs text-[var(--text-muted)]">{currentStep + 1}/{totalSteps}</span>

@@ -34,12 +34,25 @@ export default function Dashboard({ onStartReview, onStartSpeed, onNavigate }: D
           { v: `${accuracy}%`, l: '正确率', c: 'text-[var(--primary)]' },
           { v: streak, l: '连续天', c: 'text-[var(--warning)]' },
         ].map((s) => (
-          <div key={s.l} className="bg-white rounded-2xl shadow-[var(--shadow-sm)] py-3 text-center">
+          <div key={s.l} className="bg-[var(--card)] rounded-2xl shadow-[var(--shadow-sm)] py-3 text-center">
             <div className={`text-xl font-bold ${s.c}`}>{s.v}</div>
             <div className="text-xs text-[var(--text-secondary)] mt-0.5">{s.l}</div>
           </div>
         ))}
       </div>
+
+      {/* Search trigger */}
+      <button
+        onClick={() => window.dispatchEvent(new CustomEvent('open-global-search'))}
+        className="w-full bg-[var(--card)] rounded-2xl shadow-[var(--shadow-sm)] p-3 flex items-center gap-3 text-left hover:shadow-[var(--shadow-md)] transition-shadow"
+      >
+        <span className="text-lg">🔍</span>
+        <div className="flex-1">
+          <div className="text-sm text-[var(--text-secondary)]">搜索公式或题目</div>
+          <div className="text-xs text-[var(--text-muted)] mt-0.5">按名称、关键词查找</div>
+        </div>
+        <span className="text-xs bg-[var(--border)] text-[var(--text-muted)] px-2 py-1 rounded">Ctrl+K</span>
+      </button>
 
       {/* Suggestion */}
       <div className="bg-[var(--primary-light)] rounded-2xl p-4 text-sm text-[var(--primary)] leading-relaxed">
@@ -60,7 +73,7 @@ export default function Dashboard({ onStartReview, onStartSpeed, onNavigate }: D
           <div className="font-semibold">期末靶向</div>
           <div className="text-xs opacity-70 mt-0.5">高频考点冲刺</div>
         </button>
-        <button onClick={() => onNavigate('library')} className="bg-white rounded-2xl shadow-[var(--shadow-sm)] p-4 hover:shadow-[var(--shadow-md)] transition-shadow">
+        <button onClick={() => onNavigate('library')} className="bg-[var(--card)] rounded-2xl shadow-[var(--shadow-sm)] p-4 hover:shadow-[var(--shadow-md)] transition-shadow">
           <div className="font-semibold text-[var(--text)]">公式库</div>
           <div className="text-xs text-[var(--text-secondary)] mt-0.5">浏览全部公式</div>
         </button>
@@ -68,7 +81,7 @@ export default function Dashboard({ onStartReview, onStartSpeed, onNavigate }: D
 
       {/* Weak chapters */}
       {weakChapters.length > 0 && (
-        <div className="bg-white rounded-2xl shadow-[var(--shadow-sm)] p-4">
+        <div className="bg-[var(--card)] rounded-2xl shadow-[var(--shadow-sm)] p-4">
           <h3 className="text-sm font-semibold text-[var(--text)] mb-3">薄弱章节</h3>
           <div className="space-y-3">
             {weakChapters.slice(0, 3).map((ch) => (

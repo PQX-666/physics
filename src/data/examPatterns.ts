@@ -87,6 +87,7 @@ export const examPatterns: ExamPattern[] = [
     ],
     sampleQuestion: '若 at 为切向加速度，an 为法向加速度，v 为速度，a 为加速度，下列表达式不正确的是？',
     answerExplanation: 'at = dv/dt（速率对时间导数），at = d²s/dt²。at+an=a（矢量和，不是标量相加）是错误的。',
+    correctAnswer: 'C',
     distractors: [
       'at = dv/dt',
       'at² + an² = a²',
@@ -115,6 +116,7 @@ export const examPatterns: ExamPattern[] = [
     ],
     sampleQuestion: '下列关于质点系内力做功的说法正确的是？',
     answerExplanation: 'D. 内力做功的值与参考系的选择无关。一对作用力反作用力的功之和与参考系无关。',
+    correctAnswer: 'D',
   },
   {
     id: 'ep6',
@@ -341,6 +343,7 @@ export const examPatterns: ExamPattern[] = [
     ],
     sampleQuestion: 'y = 0.05cos(πt/3 - πx/4 + π/2)，求波速和传播方向。',
     answerExplanation: 'ω=π/3，k=π/4，u=ω/k=4/3 m/s，向 +x 方向传播',
+    correctAnswer: 'A',
   },
   {
     id: 'ep16',
@@ -389,6 +392,7 @@ export const examPatterns: ExamPattern[] = [
     ],
     sampleQuestion: '以下措施中不能使双缝干涉条纹宽度增大的是？',
     answerExplanation: 'A. 把装置放入水中：Δx = λD/d，水中 λ 变小，Δx 变小。其他选项 d 减小/D 增大/λ 增大都使 Δx 增大。',
+    correctAnswer: 'A',
   },
   {
     id: 'ep18',
@@ -412,6 +416,7 @@ export const examPatterns: ExamPattern[] = [
     ],
     sampleQuestion: '以下措施中不会使单缝衍射条纹宽度变窄的是？',
     answerExplanation: 'C. 使用焦距更长的透镜：f 增大 → Δx 增大（变宽，不会变窄）。其他选项都使条纹变窄。',
+    correctAnswer: 'C',
   },
   {
     id: 'ep19',
@@ -435,6 +440,7 @@ export const examPatterns: ExamPattern[] = [
     ],
     sampleQuestion: '劈尖装置从空气移到水中，条纹如何变化？',
     answerExplanation: '水中 λ 变短，同一厚度处光程差对应更多波长，级数变大，条纹整体向棱边移动且变密。',
+    isTrue: true,
   },
   {
     id: 'ep20',
@@ -478,6 +484,7 @@ export const examPatterns: ExamPattern[] = [
     ],
     sampleQuestion: '自然光以布儒斯特角入射水面，反射光和折射光中光强较弱的是？',
     answerExplanation: '反射光。以布儒斯特角入射时反射光光强通常远小于折射光。',
+    correctAnswer: 'A',
   },
 ]
 

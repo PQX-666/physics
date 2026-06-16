@@ -43,7 +43,7 @@ export default function ReviewPage() {
 
   return (
     <div className="space-y-5">
-      <div className="bg-white rounded-2xl shadow-[var(--shadow-sm)] p-6">
+      <div className="bg-[var(--card)] rounded-2xl shadow-[var(--shadow-sm)] p-6">
         <h2 className="text-lg font-bold text-[var(--text)] mb-1">今日复习</h2>
         <p className="text-sm text-[var(--text-secondary)]">
           {dueCount > 0 ? `你有 ${dueCount} 张卡片等待复习` : '今日没有到期卡片，可以自由复习'}
@@ -59,7 +59,7 @@ export default function ReviewPage() {
           <button
             key={m.mode}
             onClick={() => startReview(m.mode)}
-            className="w-full text-left bg-white rounded-2xl shadow-[var(--shadow-sm)] p-4 hover:shadow-[var(--shadow-md)] transition-shadow"
+            className="w-full text-left bg-[var(--card)] rounded-2xl shadow-[var(--shadow-sm)] p-4 hover:shadow-[var(--shadow-md)] transition-shadow"
           >
             <h3 className="font-semibold text-[var(--text)]">{m.title}</h3>
             <p className="text-xs text-[var(--text-secondary)] mt-0.5">{m.desc}</p>

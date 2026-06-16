@@ -7,6 +7,8 @@ import Dashboard from '../components/Dashboard'
 import TrainingSession from '../components/TrainingSession'
 import SprintPlan from '../components/SprintPlan'
 import UsageGuide from '../components/UsageGuide'
+import RadarChart from '../components/RadarChart'
+import StudyTrends from '../components/StudyTrends'
 
 interface HomePageProps {
   onNavigate: (page: string) => void
@@ -18,6 +20,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
   const [view, setView] = useState<View>('dashboard')
   const [trainingMode, setTrainingMode] = useState<TrainingMode>('recall')
   const [cardIds, setCardIds] = useState<string[]>([])
+  const [showSprintPlan, setShowSprintPlan] = useState(false)
 
   function startReview(mode: TrainingMode) {
     const states = getAllReviewStates()
@@ -58,9 +61,28 @@ export default function HomePage({ onNavigate }: HomePageProps) {
         onNavigate={onNavigate}
       />
 
-      <div className="bg-white rounded-2xl shadow-[var(--shadow-sm)] p-4">
-        <h3 className="text-sm font-semibold text-[var(--text)] mb-3">7 天考前冲刺计划</h3>
-        <SprintPlan />
+      <RadarChart />
+
+      <StudyTrends />
+
+      <div className="bg-[var(--card)] rounded-2xl shadow-[var(--shadow-sm)] overflow-hidden">
+        <button
+          onClick={() => setShowSprintPlan(!showSprintPlan)}
+          className="w-full flex items-center justify-between px-4 py-3 text-left hover:bg-[var(--bg)] transition-colors"
+        >
+          <div className="flex items-center gap-2">
+            <span className="text-sm">📅</span>
+            <h3 className="text-sm font-semibold text-[var(--text)]">7 天考前冲刺计划</h3>
+          </div>
+          <span className={`text-xs text-[var(--text-muted)] transition-transform ${showSprintPlan ? 'rotate-180' : ''}`}>
+            {showSprintPlan ? '收起 ▲' : '展开 ▼'}
+          </span>
+        </button>
+        {showSprintPlan && (
+          <div className="px-4 pb-4 border-t border-[var(--border)] pt-4">
+            <SprintPlan />
+          </div>
+        )}
       </div>
     </div>
   )

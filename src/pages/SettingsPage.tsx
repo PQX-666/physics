@@ -42,7 +42,7 @@ export default function SettingsPage() {
     }
   }
 
-  const sectionClass = "bg-white rounded-2xl shadow-[var(--shadow-sm)] p-4"
+  const sectionClass = "bg-[var(--card)] rounded-2xl shadow-[var(--shadow-sm)] p-4"
   const btnClass = "px-4 py-2 bg-[var(--primary)] text-white rounded-xl text-sm hover:opacity-90 transition-opacity"
   const btnSecondary = "px-4 py-2 bg-[var(--bg)] text-[var(--text)] rounded-xl text-sm hover:bg-[var(--border)] transition-colors"
 

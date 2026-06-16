@@ -15,6 +15,16 @@ export interface FormulaCard {
   similarFormulas: string[]
   relatedFormulas: string[]
   difficulty: 1 | 2 | 3 | 4 | 5
+  // 从 HTML 版合并的新字段
+  latex?: string        // KaTeX 兼容的 LaTeX 公式
+  mnemonic?: string     // 口诀
+  scene?: string        // 看到什么用它
+  plainExplanation?: string // 大白话解释
+  trap?: string         // 最易犯的错误
+  sym?: string          // 变量说明（HTML格式）
+  tag?: string          // 'five' | 'four' | 'three'
+  ex?: string           // 出自哪套卷
+  pts?: string          // 分值
 }
 
 export interface ExamPattern {
@@ -30,6 +40,8 @@ export interface ExamPattern {
   sampleQuestion: string
   answerExplanation: string
   distractors?: string[]
+  correctAnswer?: string
+  isTrue?: boolean
 }
 
 export interface CalculationPattern {
@@ -136,3 +148,88 @@ export const CHAPTERS = [
   '机械波',
   '波动光学',
 ]
+
+// ==================== 从 HTML 版迁移的新类型 ====================
+
+export interface FormulaMeta {
+  id: string
+  n: string           // 名称
+  tag: 'five' | 'four' | 'three'  // 重要度
+  tex?: string        // KaTeX LaTeX 公式
+  latex: string       // HTML 公式字符串
+  expl: string        // 大白话解释
+  scene: string       // 看到什么用它
+  mn: string          // 口诀
+  trap: string        // 易错点
+  sym: string         // 变量说明
+  ex?: string         // 出自哪套卷
+  pts?: string        // 分值
+}
+
+export interface ThinkingFramework {
+  how: string   // 怎么做（解题路径）
+  why: string   // 为什么（深层原理）
+  know: string  // 用了什么知识
+  mem: string   // 辅助记忆
+}
+
+export interface CalcQuestion {
+  id: string
+  paper: string        // A卷/B卷/C卷
+  num: number
+  pts: string
+  title: string
+  fw: ThinkingFramework
+  q: string
+  think: string
+  steps: { s: string; e: string }[]
+  traps: string[]
+  fids: string[]
+}
+
+export interface MCQuestion {
+  paper: string
+  num: number
+  q: string
+  opts: string[]
+  ans: number          // 正确答案索引 0-3
+  oe?: string[]        // 逐选项解释
+  e?: string           // 总解析
+}
+
+export interface TFQuestion {
+  paper: string
+  num: number
+  q: string
+  a: string            // '正确' | '错误'
+  e: string            // 解析
+}
+
+export interface FBQuestion {
+  paper: string
+  num: number
+  q: string
+  a: string            // 答案
+  e: string            // 详细解析（含公式族总结）
+  fam?: string         // 公式族名称
+}
+
+export interface PredQuestion {
+  q: string
+  opts?: string[]
+  ans?: number
+  a?: string
+  e: string
+  title?: string
+  steps?: { s: string; e: string }[]
+  fids?: string[]
+}
+
+export interface SprintPlanDay {
+  day: number
+  t: string
+  task: string
+  icon: string
+  tip: string
+  nav: string
+}

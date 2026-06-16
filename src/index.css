@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "katex/dist/katex.min.css";
 
 :root {
   --primary: #B8977E;
@@ -17,6 +18,23 @@
   --shadow-md: 0 2px 12px rgba(0,0,0,0.06);
   --radius: 16px;
   --radius-sm: 10px;
+}
+
+[data-theme="dark"] {
+  --primary: #c9a87c;
+  --primary-light: #2a2535;
+  --primary-dark: #a08060;
+  --bg: #1a1a2e;
+  --card: #252540;
+  --text: #e0d6c8;
+  --text-secondary: #a09888;
+  --text-muted: #6a6560;
+  --border: #3a3550;
+  --success: #8bc49a;
+  --warning: #deb87a;
+  --danger: #d4938b;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.2);
+  --shadow-md: 0 2px 12px rgba(0,0,0,0.3);
 }
 
 body {
@@ -51,4 +69,40 @@ body {
 ::-webkit-scrollbar-thumb {
   background: var(--border);
   border-radius: 4px;
+}
+
+@keyframes slide-up {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.animate-slide-up {
+  animation: slide-up 0.25s ease-out;
+}
+
+@keyframes flip-in {
+  from { transform: rotateY(90deg); opacity: 0; }
+  to { transform: rotateY(0deg); opacity: 1; }
+}
+.animate-flip-in {
+  animation: flip-in 0.3s ease-out;
+}
+
+@media print {
+  header, nav, footer, button, .fixed {
+    display: none !important;
+  }
+  body {
+    font-size: 12pt;
+    background: white;
+    color: black;
+  }
+  main {
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+  .bg-\[var\(--card\)\] {
+    background: white !important;
+    box-shadow: none !important;
+    border: 1px solid #ddd !important;
+  }
 }

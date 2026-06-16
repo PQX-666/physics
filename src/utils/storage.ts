@@ -112,3 +112,52 @@ export function getAllReviewStates(): Record<string, ReviewState> {
 export function getAllStudyLogs(): StudyLog[] {
   return loadState().studyLogs
 }
+
+// ==================== 公式收藏 ====================
+const BOOKMARKS_KEY = 'physics-bookmarks'
+
+export function getBookmarks(): Set<string> {
+  try {
+    const raw = localStorage.getItem(BOOKMARKS_KEY)
+    return raw ? new Set(JSON.parse(raw)) : new Set()
+  } catch { return new Set() }
+}
+
+export function toggleBookmark(id: string): boolean {
+  const bookmarks = getBookmarks()
+  if (bookmarks.has(id)) { bookmarks.delete(id); saveBookmarks(bookmarks); return false }
+  else { bookmarks.add(id); saveBookmarks(bookmarks); return true }
+}
+
+export function isBookmarked(id: string): boolean {
+  return getBookmarks().has(id)
+}
+
+function saveBookmarks(bookmarks: Set<string>) {
+  localStorage.setItem(BOOKMARKS_KEY, JSON.stringify([...bookmarks]))
+}
+
+// ==================== 模考历史 ====================
+const EXAM_HISTORY_KEY = 'physics-exam-history'
+
+export interface ExamResult {
+  id: string
+  date: string
+  paper: string
+  score: number
+  total: number
+  timeUsed: number
+}
+
+export function getExamHistory(): ExamResult[] {
+  try {
+    const raw = localStorage.getItem(EXAM_HISTORY_KEY)
+    return raw ? JSON.parse(raw) : []
+  } catch { return [] }
+}
+
+export function saveExamResult(result: ExamResult) {
+  const history = getExamHistory()
+  history.push(result)
+  localStorage.setItem(EXAM_HISTORY_KEY, JSON.stringify(history))
+}

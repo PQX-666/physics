@@ -9,13 +9,18 @@ import TrainingSession from '../components/TrainingSession'
 
 type SubMode = 'mcq_tf' | 'fill' | 'calc_steps' | 'traps' | null
 
-export default function ExamTrainingPage() {
+interface ExamTrainingPageProps {
+  onNavigate: (page: string) => void
+}
+
+export default function ExamTrainingPage({ onNavigate }: ExamTrainingPageProps) {
   const [mode, setMode] = useState<SubMode>(null)
   const [currentCalcIndex, setCurrentCalcIndex] = useState(0)
   const [currentMcqIndex, setCurrentMcqIndex] = useState(0)
   const [showTraps, setShowTraps] = useState(false)
   const [showTraining, setShowTraining] = useState(false)
   const [trainingMode, setTrainingMode] = useState<'recall' | 'speed'>('speed')
+  const [score, setScore] = useState({ correct: 0, total: 0 })
 
   const sPatterns = getSPatterns()
   const aPatterns = examPatterns.filter((p) => p.priority === 'A')
@@ -68,13 +73,13 @@ export default function ExamTrainingPage() {
     return (
       <div>
         <div className="flex items-center justify-between max-w-lg mx-auto mb-4">
-          <button onClick={() => { setMode(null); setCurrentMcqIndex(0) }} className="text-sm text-[var(--primary)]">&larr; 返回</button>
+          <button onClick={() => { setMode(null); setCurrentMcqIndex(0); setScore({ correct: 0, total: 0 }) }} className="text-sm text-[var(--primary)]">&larr; 返回</button>
           <span className="text-xs text-[var(--text-muted)]">{currentMcqIndex + 1} / {examPatterns.length}</span>
         </div>
         <ExamQuestion
           pattern={pattern}
           mode={qMode}
-          onResult={() => {}}
+          onResult={(correct) => setScore((s) => ({ correct: s.correct + (correct ? 1 : 0), total: s.total + 1 }))}
         />
         <div className="max-w-lg mx-auto mt-4 flex gap-3">
           {currentMcqIndex > 0 && (
@@ -94,10 +99,10 @@ export default function ExamTrainingPage() {
             </button>
           ) : (
             <button
-              onClick={() => { setMode(null); setCurrentMcqIndex(0) }}
+              onClick={() => { setMode(null); setCurrentMcqIndex(0); setScore({ correct: 0, total: 0 }) }}
               className="flex-1 py-2.5 bg-[var(--success)] text-white rounded-xl text-sm hover:opacity-90 transition-opacity"
             >
-              完成
+              完成{score.total > 0 && ` (${score.correct}/${score.total})`}
             </button>
           )}
         </div>
@@ -105,26 +110,32 @@ export default function ExamTrainingPage() {
     )
   }
 
-  const cardClass = "bg-white rounded-2xl shadow-[var(--shadow-sm)] p-5 text-left hover:shadow-[var(--shadow-md)] transition-shadow"
+  const cardClass = "bg-[var(--card)] rounded-2xl shadow-[var(--shadow-sm)] p-5 text-left hover:shadow-[var(--shadow-md)] transition-shadow"
 
   return (
     <div className="space-y-5">
       <h2 className="text-lg font-bold text-[var(--text)]">期末靶向训练</h2>
 
-      <div className="bg-red-50 rounded-2xl p-4">
-        <h3 className="font-semibold text-[var(--danger)] mb-2">S 级考点（三套卷反复出现）</h3>
-        <div className="flex flex-wrap gap-1.5">
+      <div className="bg-red-50 rounded-2xl p-3">
+        <div className="flex items-center gap-2 mb-1.5">
+          <h3 className="text-xs font-semibold text-[var(--danger)]">S 级考点</h3>
+          <span className="text-[10px] text-red-400">三套卷反复出现</span>
+        </div>
+        <div className="flex flex-wrap gap-1">
           {sPatterns.map((p) => (
-            <span key={p.id} className="text-xs bg-white text-[var(--danger)] px-2 py-1 rounded-lg">{p.title}</span>
+            <span key={p.id} className="text-[10px] bg-[var(--card)] text-[var(--danger)] px-2 py-0.5 rounded-md">{p.title}</span>
           ))}
         </div>
       </div>
 
-      <div className="bg-orange-50 rounded-2xl p-4">
-        <h3 className="font-semibold text-[var(--warning)] mb-2">A 级考点</h3>
-        <div className="flex flex-wrap gap-1.5">
+      <div className="bg-orange-50 rounded-2xl p-3">
+        <div className="flex items-center gap-2 mb-1.5">
+          <h3 className="text-xs font-semibold text-[var(--warning)]">A 级考点</h3>
+          <span className="text-[10px] text-orange-400">两套卷涉及</span>
+        </div>
+        <div className="flex flex-wrap gap-1">
           {aPatterns.map((p) => (
-            <span key={p.id} className="text-xs bg-white text-[var(--warning)] px-2 py-1 rounded-lg">{p.title}</span>
+            <span key={p.id} className="text-[10px] bg-[var(--card)] text-[var(--warning)] px-2 py-0.5 rounded-md">{p.title}</span>
           ))}
         </div>
       </div>
@@ -152,6 +163,24 @@ export default function ExamTrainingPage() {
           <h3 className="font-semibold text-[var(--text)]">高频陷阱训练</h3>
           <p className="text-xs text-[var(--text-secondary)] mt-1">判断题形式，训练常见易错概念</p>
           <span className="text-xs text-[var(--primary)] mt-2 inline-block">10 道陷阱题</span>
+        </button>
+
+        <button onClick={() => onNavigate('questions')} className={cardClass}>
+          <h3 className="font-semibold text-[var(--text)]">📋 真题题库</h3>
+          <p className="text-xs text-[var(--text-secondary)] mt-1">A/B/C卷全部选择、判断、填空、计算题</p>
+          <span className="text-xs text-[var(--primary)] mt-2 inline-block">36+18+18+11 题</span>
+        </button>
+
+        <button onClick={() => onNavigate('mock')} className={cardClass}>
+          <h3 className="font-semibold text-[var(--text)]">⏱️ 模拟考试</h3>
+          <p className="text-xs text-[var(--text-secondary)] mt-1">随机抽卷，限时90分钟，自动评分</p>
+          <span className="text-xs text-[var(--primary)] mt-2 inline-block">全真模拟</span>
+        </button>
+
+        <button onClick={() => onNavigate('cram')} className={cardClass}>
+          <h3 className="font-semibold text-[var(--text)]">🚀 考前速查</h3>
+          <p className="text-xs text-[var(--text-secondary)] mt-1">核心公式翻牌记忆，考前1小时冲刺</p>
+          <span className="text-xs text-[var(--primary)] mt-2 inline-block">39 个公式</span>
         </button>
       </div>
     </div>

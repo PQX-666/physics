@@ -60,7 +60,7 @@ export default function TrapCard({ onDone }: TrapCardProps) {
   }
 
   return (
-    <div className="bg-white rounded-2xl shadow-[var(--shadow-sm)] p-6 md:p-8 max-w-lg mx-auto">
+    <div className="bg-[var(--card)] rounded-2xl shadow-[var(--shadow-sm)] p-6 md:p-8 max-w-lg mx-auto">
       <div className="flex items-center justify-between mb-4">
         <span className="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full font-medium">陷阱训练</span>
         <span className="text-xs text-[var(--text-muted)]">{index + 1}/{TRAPS.length}</span>

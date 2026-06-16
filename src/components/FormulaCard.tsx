@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import type { FormulaCard as FormulaCardType, Rating } from '../types/formula'
 import { RATING_LABELS } from '../types/formula'
+import MathRenderer from './MathRenderer'
 
 interface FormulaCardProps {
   formula: FormulaCardType
@@ -10,13 +11,34 @@ interface FormulaCardProps {
 
 type Phase = 'recall' | 'answer'
 
-export default function FormulaCardView({ formula, mode: _mode, onRate }: FormulaCardProps) {
-  const [phase, setPhase] = useState<Phase>('recall')
+const SPEED_TIME_LIMIT = 10
 
-  // Reset phase when formula changes
+export default function FormulaCardView({ formula, mode, onRate }: FormulaCardProps) {
+  const [phase, setPhase] = useState<Phase>('recall')
+  const [timeLeft, setTimeLeft] = useState(SPEED_TIME_LIMIT)
+  const timerRef = useRef<ReturnType<typeof setInterval>>(undefined)
+
   useEffect(() => {
     setPhase('recall')
+    setTimeLeft(SPEED_TIME_LIMIT)
   }, [formula.id])
+
+  useEffect(() => {
+    if (mode !== 'speed' || phase !== 'recall') {
+      if (timerRef.current) clearInterval(timerRef.current)
+      return
+    }
+    timerRef.current = setInterval(() => {
+      setTimeLeft((t) => {
+        if (t <= 1) {
+          setPhase('answer')
+          return 0
+        }
+        return t - 1
+      })
+    }, 1000)
+    return () => { if (timerRef.current) clearInterval(timerRef.current) }
+  }, [mode, phase, formula.id])
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -41,8 +63,15 @@ export default function FormulaCardView({ formula, mode: _mode, onRate }: Formul
   return (
     <div className="max-w-lg mx-auto">
       {phase === 'recall' && (
-        <div className="bg-white rounded-2xl shadow-[var(--shadow-sm)] p-8">
-          <div className="text-xs text-[var(--text-secondary)] mb-6">{formula.chapter}</div>
+        <div className="bg-[var(--card)] rounded-2xl shadow-[var(--shadow-sm)] p-8">
+          <div className="flex items-center justify-between mb-6">
+            <span className="text-xs text-[var(--text-secondary)]">{formula.chapter}</span>
+            {mode === 'speed' && (
+              <span className={`text-sm font-bold font-mono ${timeLeft <= 3 ? 'text-[var(--danger)] animate-pulse' : 'text-[var(--warning)]'}`}>
+                {timeLeft}s
+              </span>
+            )}
+          </div>
 
           <h2 className="text-2xl font-bold text-[var(--text)] mb-2">{formula.name}</h2>
           <p className="text-sm text-[var(--text-secondary)] mb-8">请回忆这个公式，然后点击查看答案</p>
@@ -57,10 +86,10 @@ export default function FormulaCardView({ formula, mode: _mode, onRate }: Formul
       )}
 
       {phase === 'answer' && (
-        <div className="bg-white rounded-2xl shadow-[var(--shadow-sm)] p-8 space-y-6">
+        <div className="bg-[var(--card)] rounded-2xl shadow-[var(--shadow-sm)] p-8 space-y-6">
           <div className="text-center">
             <div className="text-3xl font-serif font-bold text-[var(--text)] py-6 bg-[var(--bg)] rounded-2xl">
-              {formula.formula}
+              <MathRenderer latex={formula.latex} fallback={formula.formula} />
             </div>
             <p className="text-sm text-[var(--text-secondary)] mt-4 leading-relaxed">{formula.meaning}</p>
           </div>

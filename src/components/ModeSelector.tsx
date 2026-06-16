@@ -28,7 +28,7 @@ export default function ModeSelector({ onSelect, enabledModes }: ModeSelectorPro
         <button
           key={m.mode}
           onClick={() => onSelect(m.mode)}
-          className="text-left bg-white rounded-2xl border border-[var(--border)] p-4 hover:border-[var(--primary)] hover:shadow-[var(--shadow-sm)] transition-all"
+          className="text-left bg-[var(--card)] rounded-2xl border border-[var(--border)] p-4 hover:border-[var(--primary)] hover:shadow-[var(--shadow-sm)] transition-all"
         >
           <h3 className="font-semibold text-[var(--text)]">{m.title}</h3>
           <p className="text-xs text-[var(--text-secondary)] mt-1">{m.description}</p>

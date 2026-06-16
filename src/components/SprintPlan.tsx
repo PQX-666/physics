@@ -71,7 +71,7 @@ export default function SprintPlan() {
               <div className="flex flex-wrap gap-1">
                 {plan.formulas.filter(Boolean).map((fid) => {
                   const f = getFormulaById(fid)
-                  return f ? <span key={fid} className="text-xs bg-white text-[var(--text)] px-2 py-0.5 rounded-lg">{f.name}</span> : null
+                  return f ? <span key={fid} className="text-xs bg-[var(--card)] text-[var(--text)] px-2 py-0.5 rounded-lg">{f.name}</span> : null
                 })}
               </div>
             </div>
